@@ -8,20 +8,22 @@ const form = document.querySelector('form');
 const payment = document.querySelector('#payment');
 const activities = document.querySelector('.activities');
 
-let paymentInfo = document.getElementsByTagName('fieldset')[3];
+const paymentInfo = document.getElementsByTagName('fieldset')[3];
 let creditCardPayment = paymentInfo.children[2].children[1];
-creditCardPayment.selected = true;
-let creditCardOption = paymentInfo.children[3];
-let payPalOption = paymentInfo.children[4];
-let bitCoinOption = paymentInfo.children[5];
+let selectPaymentMethod = paymentInfo.children[2].children[0];
+let payPalPayment = paymentInfo.children[2].children[2];
+let bitCoinPayment = paymentInfo.children[2].children[3];
+
+let creditCardDisplay = paymentInfo.children[3];
+let payPalDisplay = paymentInfo.children[4];
+let bitCoinDisplay = paymentInfo.children[5];
 
 
 
 form.addEventListener('submit', (event) => {
-  creditCardPayment.selected = false;
+
   const name = document.querySelector('#name');
   let nameInput = name.value;
-
   const email = document.querySelector('#mail');
   let emailInput = email.value;
   let emailValidation = /^([A-Za-z0-9_\-\.]){1,}\@([A-Za-z0-9_\-\.]){1,}\.([A-Za-z]{2,4})$/;
@@ -42,6 +44,7 @@ form.addEventListener('submit', (event) => {
 
   let CVV = document.querySelector('#cvv');
   let CVVValidation = /^\d{3}$/;
+
 
 
   if (nameInput === '') {
@@ -105,23 +108,46 @@ form.addEventListener('submit', (event) => {
     CVVErrorDiv.textContent = 'Please enter a valid 3 digit CVV';
     CVVErrorDiv.style.color = 'red';
     CVVParent.appendChild(CVVErrorDiv);
+
+  } if (creditCardPayment.selected = true) {
+    selectPaymentMethod.selected = false;
+    bitCoinPayment.selected = false;
+    payPalPayment.selected = false;
+
+  } if (selectPaymentMethod.selected = true) {
+    creditCardPayment.selected = false;
+    bitCoinPayment.selected = false;
+    payPalPayment.selected = false;
+
+  } if (bitCoinPayment.selected = true) {
+    creditCardPayment.selected = false;
+    selectPaymentMethod.selected = false;
+    payPalPayment.selected = false;
+
+  } if (payPalPayment.selected = true) {
+    creditCardPayment.selected = false;
+    selectPaymentMethod.selected = false;
+    bitCoinPayment.selected = false;
   }
 })
 
 
 
-payPalOption.style.display = 'none';
-bitCoinOption.style.display = 'none';
+payPalDisplay.style.display = 'none';
+bitCoinDisplay.style.display = 'none';
 color.style.display = 'none';
 job.style.display = 'none';
 
 
 
-window.addEventListener('load', () => {
+window.addEventListener('load', (event) => {
   const name = document.querySelector('#name');
   name.focus();
-
+  creditCardPayment.selected = true;
 });
+
+
+
 
 
 jobRole.addEventListener('change', (event) => {
@@ -163,7 +189,6 @@ design.addEventListener('change', (event) => {
     dimgrey.disabled = false;
   } else {
     color.style.display = 'none';
-
   }
 });
 
@@ -179,6 +204,10 @@ activities.addEventListener('change', (event) => {
   let node = document.querySelector('input[name=node]');
   let buildTools = document.querySelector('input[name=build-tools]');
   let npm = document.querySelector('input[name=npm]');
+  let total = 0;
+  let text = event.target.parentNode.textContent;
+  const totalCost = document.createElement('div');
+  totalCost.textContent = 'Total is $' + total;
 
   if (event.target.name === 'js-frameworks') {
     express.disabled = event.target.checked;
@@ -188,28 +217,47 @@ activities.addEventListener('change', (event) => {
     node.disabled = event.target.checked;
   } if (event.target.name === 'node') {
     jsLibs.disabled = event.target.checked;
+  } if (text.includes('$100')) {
+    total += 100;
+    return total;
+    console.log(total);
+    activities.appendChild(totalCost);
+  } if (text.includes('$200')) {
+    total += 200;
+    return total;
+    console.log(total);
+    activities.appendChild(totalCost);
+  } if (text.includes('$100') && total > 0) {
+    total -= 100;
+    return total;
+    console.log(total);
+    activities.appendChild(totalCost);
+  } if (text.includes('$200') && total > 100) {
+    total -= 200;
+    return total;
+    console.log(total);
+    activities.appendChild(totalCost);
   }
-});
-
+})
 
 
 payment.addEventListener('change', (event) => {
 
   if (event.target.value === 'paypal') {
-    creditCardOption.style.display = 'none';
-    bitCoinOption.style.display = 'none';
-    payPalOption.style.display = 'block';
+    creditCardDisplay.style.display = 'none';
+    bitCoinDisplay.style.display = 'none';
+    payPalDisplay.style.display = 'block';
   } else if (event.target.value === 'bitcoin') {
-    creditCardOption.style.display = 'none';
-    bitCoinOption.style.display = 'block';
-    payPalOption.style.display = 'none';
+    creditCardDisplay.style.display = 'none';
+    bitCoinDisplay.style.display = 'block';
+    payPalDisplay.style.display = 'none';
   } else if (event.target.value === 'credit card') {
-    creditCardOption.style.display = 'block';
-    bitCoinOption.style.display = 'none';
-    payPalOption.style.display = 'none';
+    creditCardDisplay.style.display = 'block';
+    bitCoinDisplay.style.display = 'none';
+    payPalDisplay.style.display = 'none';
   } else if (event.target.value === 'select_method') {
-    creditCardOption.style.display = 'none';
-    bitCoinOption.style.display = 'none';
-    payPalOption.style.display = 'none';
+    creditCardDisplay.style.display = 'block';
+    bitCoinDisplay.style.display = 'block';
+    payPalDisplay.style.display = 'block';
   }
-}) 
+})
