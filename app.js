@@ -108,26 +108,6 @@ form.addEventListener('submit', (event) => {
     CVVErrorDiv.textContent = 'Please enter a valid 3 digit CVV';
     CVVErrorDiv.style.color = 'red';
     CVVParent.appendChild(CVVErrorDiv);
-
-  } if (creditCardPayment.selected = true) {
-    selectPaymentMethod.selected = false;
-    bitCoinPayment.selected = false;
-    payPalPayment.selected = false;
-
-  } if (selectPaymentMethod.selected = true) {
-    creditCardPayment.selected = false;
-    bitCoinPayment.selected = false;
-    payPalPayment.selected = false;
-
-  } if (bitCoinPayment.selected = true) {
-    creditCardPayment.selected = false;
-    selectPaymentMethod.selected = false;
-    payPalPayment.selected = false;
-
-  } if (payPalPayment.selected = true) {
-    creditCardPayment.selected = false;
-    selectPaymentMethod.selected = false;
-    bitCoinPayment.selected = false;
   }
 })
 
