@@ -197,26 +197,6 @@ activities.addEventListener('change', (event) => {
     node.disabled = event.target.checked;
   } if (event.target.name === 'node') {
     jsLibs.disabled = event.target.checked;
-  } if (text.includes('$100')) {
-    total += 100;
-    return total;
-    console.log(total);
-    activities.appendChild(totalCost);
-  } if (text.includes('$200')) {
-    total += 200;
-    return total;
-    console.log(total);
-    activities.appendChild(totalCost);
-  } if (text.includes('$100') && total > 0) {
-    total -= 100;
-    return total;
-    console.log(total);
-    activities.appendChild(totalCost);
-  } if (text.includes('$200') && total > 100) {
-    total -= 200;
-    return total;
-    console.log(total);
-    activities.appendChild(totalCost);
   }
 })
 
