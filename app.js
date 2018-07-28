@@ -7,6 +7,9 @@ const name = document.querySelector('#name');
 const form = document.querySelector('form');
 const payment = document.querySelector('#payment');
 const activities = document.querySelector('.activities');
+const activitiesInput = activities.querySelectorAll('input');
+const activitiesLabel = activities.getElementsByTagName('label');
+
 
 const paymentInfo = document.getElementsByTagName('fieldset')[3];
 let creditCardPayment = paymentInfo.children[2].children[1];
@@ -82,7 +85,7 @@ form.addEventListener('submit', (event) => {
     activitiesErrorDiv.style.color = 'red';
     activities.appendChild(activitiesErrorDiv);
 
-  } if ((!creditCard.value.match(creditCardValidation)) && (creditCardPayment.selected = true)) {
+  } if ((!creditCard.value.match(creditCardValidation)) && (creditCardPayment.selected === true)) {
     console.log('wrong credit card');
     event.preventDefault();
     let creditCardParent = payment.parentElement;
@@ -91,7 +94,7 @@ form.addEventListener('submit', (event) => {
     creditCardErrorDiv.style.color = 'red';
     creditCardParent.appendChild(creditCardErrorDiv);
 
-  } if ((!zipCode.value.match(zipCodeValidation)) && (creditCardPayment.selected = true)) {
+  } if ((!zipCode.value.match(zipCodeValidation)) && (creditCardPayment.selected === true)) {
     console.log('wrong zip code');
     event.preventDefault();
     let zipCodeParent = payment.parentElement;
@@ -100,7 +103,7 @@ form.addEventListener('submit', (event) => {
     zipCodeErrorDiv.style.color = 'red';
     zipCodeParent.appendChild(zipCodeErrorDiv);
 
-  } if ((!CVV.value.match(CVVValidation)) && (creditCardPayment.selected = true)) {
+  } if ((!CVV.value.match(CVVValidation)) && (creditCardPayment.selected === true)) {
     console.log('wrong CVV');
     event.preventDefault();
     let CVVParent = payment.parentElement;
@@ -173,6 +176,37 @@ design.addEventListener('change', (event) => {
 });
 
 
+function addTotalElement() {
+  let total = 0;
+  const totalDiv = document.createElement('div');
+  totalDiv.id = 'total';
+  activities.appendChild(totalDiv);
+  for (let i = 0; i < activitiesLabel.length; i++) {
+
+    activitiesInput[i].addEventListener('click', () => {
+
+      const text = activitiesLabel[i].textContent;
+      if (activitiesInput[i].checked) {
+        if (text.includes('$100')) {
+          total += 100;
+        } else if (text.includes('$200')) {
+          total += 200;
+        };
+      } else {
+        if (text.includes('$100') && total > 0) {
+          total -= 100;
+        } else if (text.includes('$200') && total > 100) {
+          total -= 200;
+        }
+      }
+      console.log(total);
+      return total;
+    })
+    totalDiv.textContent = 'Your total cost is $' + total;
+  }
+}
+
+addTotalElement();
 
 
 
